@@ -250,6 +250,47 @@
 
         .balloon { position: absolute; width: 50px; height: 70px; border-radius: 50%; bottom: -100px; animation: rise 6s ease-in forwards; }
         @keyframes rise { to { transform: translateY(-120vh); } }
+/* MOBILE OPTIMIZATION */
+@media screen and (max-width: 600px) {
+    h1 { font-size: 1.8rem; text-align: center; padding: 0 10px; }
+    p { font-size: 1rem; text-align: center; }
+
+    /* Card adjustments for smaller screens */
+    .card {
+        width: 90%;
+        padding: 25px 15px;
+        margin: 0 auto;
+    }
+
+    /* Rope lights size for mobile */
+    #rope-lights {
+        background-size: 200px 100%; /* Chote curves taake mobile screen par fit aayein */
+        height: 80px;
+    }
+
+    /* Adjusting Curtains for Mobile */
+    .curtain {
+        width: 50%;
+    }
+
+    /* Scale down the rotating border logic to prevent overflow */
+    .card::before {
+        width: 200%;
+        height: 200%;
+    }
+
+    /* Ensure balloons and hearts don't crowd the screen */
+    .balloon {
+        width: 30px;
+        height: 45px;
+    }
+}
+
+/* Fixing Layout for very small phones */
+@media screen and (max-width: 380px) {
+    .card h2 { font-size: 1.2rem; }
+    button { padding: 10px 20px; font-size: 0.9rem; }
+}
     </style>
 </head>
 <body>
