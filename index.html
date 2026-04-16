@@ -13,7 +13,6 @@
             --text-dark: #2F4F4F;
         }
 
-        /* Basic Setup for Oppo/Android */
         * { box-sizing: border-box; }
 
         body, html {
@@ -26,8 +25,8 @@
             position: fixed;
         }
 
-        /* Floating Hearts Layer */
-        #hearts-container {
+        /* Hearts & Balloons Container */
+        #animation-container {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
@@ -38,34 +37,54 @@
         .heart {
             position: absolute;
             color: var(--soft-pink);
-            filter: drop-shadow(0 0 5px #FFC0CB);
             animation: floatUp 7s linear infinite;
             bottom: -10vh;
         }
 
-        @keyframes floatUp {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+        /* Balloons Style */
+        .balloon {
+            position: absolute;
+            width: 40px;
+            height: 55px;
+            border-radius: 50%;
+            bottom: -100px;
+            animation: fly 8s ease-in infinite;
+            z-index: 2;
+        }
+        .balloon::after {
+            content: "";
+            position: absolute;
+            bottom: -15px; left: 18px;
+            width: 2px; height: 20px;
+            background: rgba(0,0,0,0.2);
         }
 
-        /* M-Shape Rope Lights (Golden Garland) */
+        @keyframes fly {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-120vh) rotate(20deg); opacity: 0; }
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(-120vh); opacity: 0; }
+        }
+
+        /* Rope Lights */
         #rope-lights {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 80px;
-            z-index: 2500; /* Higher than curtains to stay visible */
+            z-index: 2500;
             display: none;
             background-image: url("data:image/svg+xml,%3Csvg width='150' height='100' viewBox='0 0 150 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,0 Q18.75,140 37.5,0 Q56.25,140 75,0 Q93.75,140 112.5,0 Q131.25,140 150,0' fill='none' stroke='%23d4af37' stroke-width='4'/%3E%3Ccircle cx='18.75' cy='75' r='7' fill='%23fff'/%3E%3Ccircle cx='56.25' cy='75' r='7' fill='%23fff'/%3E%3Ccircle cx='93.75' cy='75' r='7' fill='%23fff'/%3E%3Ccircle cx='131.25' cy='75' r='7' fill='%23fff'/%3E%3C/svg%3E");
             background-repeat: repeat-x;
             background-size: 200px 100%;
-            filter: drop-shadow(0 0 10px var(--gold));
         }
 
-        .lights-active { display: block !important; animation: glowPulse 2s infinite alternate; }
-        @keyframes glowPulse { from { opacity: 0.8; } to { opacity: 1; } }
+        .lights-active { display: block !important; }
 
-        /* General Page Setup */
+        /* Page Layout */
         .page {
             display: none;
             height: 100%; width: 100%;
@@ -81,7 +100,7 @@
         .active { display: flex; z-index: 10; }
         .white-glow { background: radial-gradient(circle, #ffffff 0%, #A9A9A9 100%); }
 
-        /* Rotating Border Card Style */
+        /* Rotating Card */
         .card {
             background: white;
             padding: 30px 20px;
@@ -97,17 +116,13 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
         }
 
-        /* Final Page Reveal Logic */
         #final-card {
             opacity: 0;
             transform: translateY(30px);
-            transition: all 1.2s ease 2s; /* Appears after curtains move */
+            transition: all 1.2s ease 2.5s;
         }
 
-        .show-final-content #final-card {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .show-final-content #final-card { opacity: 1; transform: translateY(0); }
 
         .card::before {
             content: '';
@@ -128,18 +143,20 @@
         }
 
         @keyframes rotateBorder {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            from { transform: rotate(0deg); } to { transform: rotate(360deg); }
         }
 
-        /* Curtains for Oppo Screens */
+        /* Curtains with Auto-Fade */
         .curtain-wrapper {
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
             display: flex; z-index: 2000;
             pointer-events: none;
+            transition: opacity 1.5s ease 4s; /* Fade out curtains after they open */
         }
+
+        .show-final-content .curtain-wrapper { opacity: 0; }
 
         .curtain {
             width: 50.5%; height: 100.5%;
@@ -150,13 +167,9 @@
             transition: transform 3.5s ease-in-out;
         }
 
-        #curtain-l { border-right: 2px solid var(--gold); }
-        #curtain-r { border-left: 2px solid var(--gold); }
-
         .open-left { transform: rotate(-12deg) translateX(-115%); }
         .open-right { transform: rotate(12deg) translateX(115%); }
 
-        /* Buttons & Typography */
         button {
             padding: 12px 25px;
             background: var(--text-dark);
@@ -168,14 +181,11 @@
             font-size: 16px;
             font-weight: bold;
         }
-
-        h1 { font-size: 1.8rem; margin-bottom: 10px; }
-        p { font-size: 1rem; line-height: 1.5; }
     </style>
 </head>
 <body>
 
-    <div id="hearts-container"></div>
+    <div id="animation-container"></div>
     <div id="rope-lights"></div>
 
     <section class="page active white-glow" id="page1">
@@ -197,61 +207,62 @@
     </section>
 
     <section class="page" id="page4">
-        <div class="curtain-wrapper">
+        <div class="curtain-wrapper" id="c-wrap">
             <div class="curtain" id="curtain-l"></div>
             <div class="curtain" id="curtain-r"></div>
         </div>
         <div class="card" id="final-card">
             <h2 style="color: var(--gold); margin-bottom: 10px;">Happy Birthday Rabel!</h2>
-            <p>You make the world brighter just by being in it. May your year be as beautiful as you are!</p>
+            <p>You make the world brighter just by being in it.</p>
         </div>
     </section>
 
     <audio id="audio" src="music.mp3"></audio>
 
     <script>
-        // Heart Spawner
         function spawnHeart() {
-            const container = document.getElementById('hearts-container');
+            const container = document.getElementById('animation-container');
             const heart = document.createElement('div');
             heart.className = 'heart'; heart.innerHTML = '❤';
             heart.style.left = Math.random() * 100 + 'vw';
             heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
-            heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
             container.appendChild(heart);
             setTimeout(() => heart.remove(), 7000);
         }
-        setInterval(spawnHeart, 350);
+        setInterval(spawnHeart, 400);
 
-        // Page Navigation
+        function flyBalloons() {
+            const container = document.getElementById('animation-container');
+            const colors = ['#FF69B4', '#FFD700', '#87CEEB', '#DDA0DD', '#FFB6C1'];
+            for(let i=0; i<15; i++) {
+                setTimeout(() => {
+                    const b = document.createElement('div');
+                    b.className = 'balloon';
+                    b.style.left = Math.random() * 90 + 'vw';
+                    b.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    b.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                    container.appendChild(b);
+                    setTimeout(() => b.remove(), 8000);
+                }, i * 300);
+            }
+        }
+
         function goToPage(index) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             const nextPage = document.getElementById('page' + index);
             nextPage.classList.add('active');
             
             if(index === 4) {
-                // Keep the lights on during the final reveal
                 document.getElementById('rope-lights').classList.add('lights-active');
-                
                 setTimeout(() => {
                     document.getElementById('curtain-l').classList.add('open-left');
                     document.getElementById('curtain-r').classList.add('open-right');
                     nextPage.classList.add('show-final-content');
+                    flyBalloons(); // Balloons fly automatically when curtains open
                 }, 600);
             }
         }
 
-        // Teaser Step
-        let qStep = 0;
-        function nextQuestion() {
-            const texts = ["Have a look madam ji", "Ready for your surprise?"];
-            if(qStep < texts.length) {
-                document.getElementById('q-text').innerText = texts[qStep];
-                qStep++;
-            } else { goToPage(3); }
-        }
-
-        // Turn on Lights Event
         function lightsOn() {
             document.getElementById('page3').classList.add('white-glow');
             document.getElementById('rope-lights').classList.add('lights-active');
@@ -259,12 +270,19 @@
             document.getElementById('controls').innerHTML = '<button onclick="startMusic()">Play Music</button>';
         }
 
-        // Play Music & Go to End
         function startMusic() {
-            const music = document.getElementById('audio');
-            music.play().catch(e => console.log("User must click to play audio"));
-            document.getElementById('stage-msg').innerText = "Almost there...";
-            document.getElementById('controls').innerHTML = '<button onclick="goToPage(4)">See Message</button>';
+            document.getElementById('audio').play();
+            document.getElementById('stage-msg').innerText = "Ready to Fly Balloons?";
+            document.getElementById('controls').innerHTML = '<button onclick="goToPage(4)">Fly Balloons & See Message</button>';
+        }
+
+        let qStep = 0;
+        function nextQuestion() {
+            const texts = ["Have a look madam ji", "Ready for your surprise?"];
+            if(qStep < texts.length) {
+                document.getElementById('q-text').innerText = texts[qStep];
+                qStep++;
+            } else { goToPage(3); }
         }
     </script>
 </body>
