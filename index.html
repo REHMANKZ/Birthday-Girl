@@ -186,21 +186,21 @@
     <div id="rope-lights"></div>
 
     <section class="page active white-glow" id="page1">
-        <h1>Happy Birthday Rabel</h1>
+        <h1>Happy BirthdayMunni❣</h1>
         <p>A cinematic journey made for you</p>
-        <button onclick="goToPage(2)">Open Your Gift</button>
+        <button onclick="goToPage(2)">Open Your Gift🎁</button>
     </section>
 
     <section class="page" id="page2">
         <div class="card">
-            <h2 id="q-text">It's your special day</h2>
+            <h2 id="q-text">Aj Tuhinje Lai Special day aahe💌</h2>
             <button onclick="nextQuestion()">Next</button>
         </div>
     </section>
 
     <section class="page" id="page3">
-        <h2 id="stage-msg">The stage is set</h2>
-        <div id="controls"><button onclick="lightsOn()">Turn on lights</button></div>
+        <h2 id="stage-msg">Stage tayar aahe 🤭</h2>
+        <div id="controls"><button onclick="lightsOn()">Thoro lights on kar💡</button></div>
     </section>
 
     <section class="page" id="page4">
@@ -209,8 +209,8 @@
             <div class="curtain" id="curtain-r"></div>
         </div>
         <div class="card" id="final-card">
-            <h2 style="color: var(--gold); margin-bottom: 10px;">Happy Birthday Rabel!</h2>
-            <p>You make the world brighter just by being in it. May your year be as beautiful as you are!</p>
+            <h2 style="color: var(--gold); margin-bottom: 10px;">Happy Birthday Munni😚</h2>
+            <p>Pyari Moula tokhe hamesha khush rakhe🤗 tokhe zindagi ji har khushi naseeb thiyan❣ ae Moula kare tuhuinji har dua qabool thiye🤲🏻 hamesha khush raho Muhinji Jana😚 .</p>
         </div>
     </section>
 
@@ -265,19 +265,19 @@
         function lightsOn() {
             document.getElementById('page3').classList.add('white-glow');
             document.getElementById('rope-lights').classList.add('lights-active');
-            document.getElementById('stage-msg').innerText = "Music makes it better";
+            document.getElementById('stage-msg').innerText = "Muhinje khayal sa thoro music bh play kariyu 🎶";
             document.getElementById('controls').innerHTML = '<button onclick="startMusic()">Play Music</button>';
         }
 
         function startMusic() {
             document.getElementById('audio').play();
-            document.getElementById('stage-msg').innerText = "Ready for the Finale?";
-            document.getElementById('controls').innerHTML = '<button onclick="goToPage(4)">Fly Balloons & See Message</button>';
+            document.getElementById('stage-msg').innerText = "Baki last thoro🤭...";
+            document.getElementById('controls').innerHTML = '<button onclick="goToPage(4)">See Message</button>';
         }
 
         let qStep = 0;
         function nextQuestion() {
-            const texts = ["Have a look madam ji", "Ready for your surprise?"];
+            const texts = ["Have a look madam ji🤭", "Tayar aahi surprise je lai?🥳"];
             if(qStep < texts.length) {
                 document.getElementById('q-text').innerText = texts[qStep];
                 qStep++;
