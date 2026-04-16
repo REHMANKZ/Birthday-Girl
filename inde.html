@@ -1,0 +1,626 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rabel's Birthday Journey</title>
+    <style>
+        :root {
+            --platinum: #DCDCDC;
+            --gold: #d4af37;
+            --soft-pink: #FFB6C1;
+            --neon-pink: #ff007f;
+            --curtain-red: #800000;
+            --text-dark: #2F4F4F;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Georgia', serif;
+            overflow: hidden;
+            background-color: var(--platinum);
+            color: var(--text-dark);
+        }
+
+        /* Soft Pink Floating Hearts */
+        #hearts-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .heart {
+            position: absolute;
+            color: var(--soft-pink);
+            filter: drop-shadow(0 0 5px #FFC0CB);
+            animation: floatUp 7s linear infinite;
+            bottom: -10vh;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* NEW: Scalloped Rope Lights (Corner to Down to Center to Corner) */
+       #rope-lights {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    z-index: 500;
+    display: none;
+    /* Is SVG mein 4 curves hain jo repeat honge */
+    background-image: url("data:image/svg+xml,%3Csvg width='300' height='100' viewBox='0 0 300 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,0 Q37.5,140 75,0 Q112.5,140 150,0 Q187.5,140 225,0 Q262.5,140 300,0' fill='none' stroke='%23d4af37' stroke-width='3'/%3E%3Ccircle cx='37.5' cy='75' r='7' fill='%23fff'/%3E%3Ccircle cx='112.5' cy='75' r='7' fill='%23fff'/%3E%3Ccircle cx='187.5' cy='75' r='7' fill='%23fff'/%3E%3Ccircle cx='262.5' cy='75' r='7' fill='%23fff'/%3E%3C/svg%3E");
+    background-repeat: repeat-x; /* Is se lari poori screen par repeat hogi */
+    background-size: 400px 100%; /* Har 400px ke baad lari repeat hogi, pore screen cover karne ke liye */
+    filter: drop-shadow(0 0 15px var(--gold));
+}
+
+.lights-active { 
+    display: block !important; 
+    animation: glow-pulse 2s infinite alternate; 
+}
+
+@keyframes glow-pulse {
+    from { filter: drop-shadow(0 0 10px var(--gold)); opacity: 0.9; }
+    to { filter: drop-shadow(0 0 25px var(--gold)); opacity: 1; }
+}
+        .lights-active { display: block !important; animation: flicker 2s infinite; }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        /* ROTATING NEON BORDER CARDS */
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            color: var(--text-dark);
+            max-width: 400px;
+            width: 85%;
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden; /* Clips the rotating light */
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: conic-gradient(transparent, var(--soft-pink), var(--gold), transparent);
+            animation: rotateBorder 4s linear infinite;
+            z-index: -2;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            inset: 5px; /* Border thickness */
+            background: white;
+            border-radius: 15px;
+            z-index: -1;
+        }
+
+        @keyframes rotateBorder {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Buttons, Curtains, etc. */
+        button {
+            padding: 12px 30px;
+            background: var(--text-dark);
+            color: white;
+            border: 2px solid var(--gold);
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-transform: uppercase;
+            z-index: 20;
+        }
+
+        .page { display: none; height: 100vh; width: 100vw; flex-direction: column; justify-content: center; align-items: center; position: absolute; }
+        .active { display: flex; z-index: 10; }
+        .white-glow { background: radial-gradient(circle, #ffffff 0%, #A9A9A9 100%); }
+
+        /* Matching Vibes Curtain Design */
+.curtain-wrapper {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.curtain {
+    width: 50%;
+    height: 100%;
+    /* Dusty Rose / Soft Silk Colour */
+    background: #bc8f8f; 
+    /* Silk Pleats (vertical lines) effect */
+    background-image: repeating-linear-gradient(
+        to right, 
+        rgba(0,0,0,0) 0px, 
+        rgba(0,0,0,0) 30px, 
+        rgba(0,0,0,0.1) 35px, 
+        rgba(255,255,255,0.05) 40px
+    );
+    border-bottom: 12px solid var(--gold);
+    transition: transform 2.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+    position: relative;
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.2);
+}
+
+/* Golden Lace Edge on the opening side */
+.curtain::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 10px;
+    height: 100%;
+    background: var(--gold);
+    box-shadow: 0 0 15px var(--gold);
+}
+
+/* Left curtain edge on right, Right curtain edge on left */
+#curtain-l::after { right: 0; }
+#curtain-r::after { left: 0; }
+
+/* Cinematic Opening Animation */
+/* Improved Cinematic V-Shape Opening */
+.open-left { 
+    animation: vOpenLeft 4.5s forwards cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.open-right { 
+    animation: vOpenRight 4.5s forwards cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes vOpenLeft {
+    0% { 
+        transform: scaleX(1) translateX(0);
+        clip-path: block-step; /* Full rectangle */
+        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    }
+    /* Step 1: Create a sharp V-shape by pulling the bottom-right corner up */
+    40% { 
+        transform: scaleX(0.8) translateX(0);
+        transform-origin: left top;
+        clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 0% 100%); 
+    }
+    /* Step 2: Slide the folded V-shape smoothly to the left */
+    100% { 
+        transform: scaleX(0.3) translateX(-150%);
+        transform-origin: left top;
+        clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 0% 100%);
+        opacity: 0;
+    }
+}
+
+@keyframes vOpenRight {
+    0% { 
+        transform: scaleX(1) translateX(0);
+        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    }
+    /* Step 1: Create a sharp V-shape by pulling the bottom-left corner up */
+    40% { 
+        transform: scaleX(0.8) translateX(0);
+        transform-origin: right top;
+        clip-path: polygon(0% 0%, 100% 0%, 0% 0%, 100% 100%); 
+    }
+    /* Step 2: Slide the folded V-shape smoothly to the right */
+    100% { 
+        transform: scaleX(0.3) translateX(150%);
+        transform-origin: right top;
+        clip-path: polygon(0% 0%, 100% 0%, 0% 0%, 100% 100%);
+        opacity: 0;
+    }
+}
+
+/* Ensure the curtain looks like fabric during the fold */
+.curtain {
+    width: 50%;
+    height: 100%;
+    background: #bc8f8f; 
+    background-image: repeating-linear-gradient(to right, rgba(0,0,0,0) 0px, rgba(0,0,0,0.1) 35px);
+    border-bottom: 12px solid var(--gold);
+    position: relative;
+    z-index: 1000;
+    /* Added this for a more realistic 3D fold effect */
+    perspective: 1000px;
+}
+        /* Gallery Overlay */
+        #gallery-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; flex-direction: column; align-items: center; padding-top: 50px; overflow-y: auto; color: white; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; width: 85%; margin-top: 30px; }
+        .gallery-grid img { width: 100%; border: 2px solid var(--gold); border-radius: 10px; }
+
+        .balloon { position: absolute; width: 50px; height: 70px; border-radius: 50%; bottom: -100px; animation: rise 6s ease-in forwards; }
+        @keyframes rise { to { transform: translateY(-120vh); } }
+    </style>
+</head>
+<body>
+
+    <div id="hearts-container"></div>
+    <div id="rope-lights"></div>
+
+    <section class="page active white-glow" id="page1">
+        <h1>Happy Birthday Rabel</h1>
+        <p>A cinematic journey just made for you</p>
+        <button onclick="goToPage(2)">Open Your Gift</button>
+    </section>
+
+    <section class="page" id="page2">
+        <div class="card">
+            <h2 id="q-text">It's your special day</h2>
+            <button onclick="nextQuestion()">Next</button>
+        </div>
+    </section>
+
+    <section class="page" id="page3">
+        <h2 id="stage-msg">The stage is set</h2>
+        <div id="controls"><button onclick="lightsOn()">Turn on lights</button></div>
+    </section>
+
+    <section class="page" id="page4">
+        <div class="curtain-wrapper">
+            <div class="curtain" id="curtain-l" style="border-right: 2px solid gold;"></div>
+            <div class="curtain" id="curtain-r" style="border-left: 2px solid gold;"></div>
+        </div>
+        <div class="card">
+            <h2 style="color: var(--gold);">Happy Birthday Rabel!</h2>
+            <p>You make the world brighter just by being in it. Enjoy your day!</p>
+        </div>
+        <button onclick="openGallery()">Our Memories</button>
+        <button onclick="window.location.href='https://wa.me/YOUR_NUMBER'">Reply Magic</button>
+    </section>
+
+    <div id="gallery-overlay">
+        <h1>Our Memories</h1>
+        <div class="gallery-grid">
+            <img src="https://via.placeholder.com/200" alt="Memory 1">
+            <img src="https://via.placeholder.com/200" alt="Memory 2">
+            <img src="https://via.placeholder.com/200" alt="Memory 3">
+        </div>
+        <button onclick="closeGallery()">Close Gallery</button>
+    </div>
+
+    <audio id="audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
+    <script>
+        function spawnHeart() {
+            const container = document.getElementById('hearts-container');
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+            container.appendChild(heart);
+            setTimeout(() => heart.remove(), 7000);
+        }
+        setInterval(spawnHeart, 300);
+
+        function goToPage(index) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page' + index).classList.add('active');
+            if(index === 4) {
+                setTimeout(() => {
+                    document.getElementById('curtain-l').classList.add('open-left');
+                    document.getElementById('curtain-r').classList.add('open-right');
+                }, 500);
+            }
+        }
+
+        let qStep = 0;
+        function nextQuestion() {
+            const texts = ["Have a look madam ji", "Ready for your surprise?"];
+            if(qStep < texts.length) {
+                document.getElementById('q-text').innerText = texts[qStep];
+                qStep++;
+            } else { goToPage(3); }
+        }
+
+        function lightsOn() {
+            document.getElementById('page3').classList.add('white-glow');
+            document.getElementById('rope-lights').classList.add('lights-active');
+            document.getElementById('stage-msg').innerText = "Music makes it better";
+            document.getElementById('controls').innerHTML = '<button onclick="startMusic()">Play Music</button>';
+        }
+
+        function startMusic() {
+            document.getElementById('audio').play();
+            document.getElementById('stage-msg').innerText = "Let the colors fly";
+            document.getElementById('controls').innerHTML = '<button onclick="releaseBalloons()">Fly Balloons</button>';
+        }
+
+        function releaseBalloons() {
+            for(let i=0; i<20; i++) {
+                setTimeout(() => {
+                    const b = document.createElement('div');
+                    b.className = 'balloon';
+                    b.style.left = Math.random() * 90 + 'vw';
+                    b.style.backgroundColor = `hsl(${Math.random() * 360}, 80%, 60%)`;
+                    document.getElementById('page3').appendChild(b);
+                }, i * 150);
+            }
+            setTimeout(() => {
+                document.getElementById('stage-msg').innerText = "Almost there...";
+                document.getElementById('controls').innerHTML = '<button onclick="goToPage(4)">See Message</button>';
+            }, 3000);
+        }
+
+        function openGallery() { document.getElementById('gallery-overlay').style.display = 'flex'; }
+        function closeGallery() { document.getElementById('gallery-overlay').style.display = 'none'; }
+    </script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rabel's Birthday Journey</title>
+    <style>
+        :root {
+            --platinum: #DCDCDC;
+            --gold: #d4af37;
+            --soft-pink: #FFB6C1;
+            --curtain-rose: #bc8f8f;
+            --text-dark: #2F4F4F;
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            font-family: 'Georgia', serif;
+            overflow: hidden;
+            background-color: var(--platinum);
+            color: var(--text-dark);
+        }
+
+        /* Continuous Soft Pink Hearts */
+        #hearts-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .heart {
+            position: absolute;
+            color: var(--soft-pink);
+            filter: drop-shadow(0 0 5px #FFC0CB);
+            animation: floatUp 7s linear infinite;
+            bottom: -10vh;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Scalloped Rope Lights (M-Shape) */
+        #rope-lights {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 120px;
+            z-index: 500;
+            display: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='300' height='100' viewBox='0 0 300 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,0 Q37.5,140 75,0 Q112.5,140 150,0 Q187.5,140 225,0 Q262.5,140 300,0' fill='none' stroke='%23d4af37' stroke-width='3'/%3E%3Ccircle cx='37.5' cy='75' r='7' fill='%23fff'/%3E%3Ccircle cx='112.5' cy='75' r='7' fill='%23fff'/%3E%3Ccircle cx='187.5' cy='75' r='7' fill='%23fff'/%3E%3Ccircle cx='262.5' cy='75' r='7' fill='%23fff'/%3E%3C/svg%3E");
+            background-repeat: repeat-x;
+            background-size: 400px 100%;
+            filter: drop-shadow(0 0 15px var(--gold));
+        }
+
+        .lights-active { display: block !important; animation: glow 2s infinite alternate; }
+        @keyframes glow { from { opacity: 0.8; } to { opacity: 1; } }
+
+        /* Rotating Border Card */
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 400px;
+            width: 85%;
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+            color: var(--text-dark);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            width: 150%; height: 150%;
+            background: conic-gradient(transparent, var(--soft-pink), var(--gold), transparent);
+            animation: rotateBorder 4s linear infinite;
+            z-index: -2;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            inset: 5px;
+            background: white;
+            border-radius: 15px;
+            z-index: -1;
+        }
+
+        @keyframes rotateBorder {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* IMPROVED CURTAINS: V-Shape Opening */
+        .curtain-wrapper {
+            position: fixed;
+            top: 0; width: 100%; height: 100%;
+            display: flex; z-index: 1000;
+            pointer-events: none;
+        }
+
+        .curtain {
+            width: 50%; height: 100%;
+            background: var(--curtain-rose);
+            background-image: repeating-linear-gradient(to right, rgba(0,0,0,0) 0px, rgba(0,0,0,0.1) 35px);
+            border-bottom: 10px solid var(--gold);
+            position: relative;
+            transform-origin: top; /* Pinned to top */
+            transition: all 3s ease-in-out;
+        }
+
+        .curtain::after {
+            content: "";
+            position: absolute;
+            top: 0; width: 5px; height: 100%;
+            background: var(--gold);
+        }
+
+        #curtain-l::after { right: 0; }
+        #curtain-r::after { left: 0; }
+
+        /* Simple 2-Step V-Open & Slide */
+        .open-left { animation: vSlideLeft 4s forwards; }
+        .open-right { animation: vSlideRight 4s forwards; }
+
+        @keyframes vSlideLeft {
+            0% { transform: rotate(0deg) translateX(0); }
+            30% { transform: rotate(-15deg) translateX(0); } /* V-Shape start */
+            100% { transform: rotate(-15deg) translateX(-110%); } /* Full slide */
+        }
+
+        @keyframes vSlideRight {
+            0% { transform: rotate(0deg) translateX(0); }
+            30% { transform: rotate(15deg) translateX(0); } /* V-Shape start */
+            100% { transform: rotate(15deg) translateX(110%); } /* Full slide */
+        }
+
+        /* Utilities */
+        .page { display: none; height: 100vh; width: 100vw; flex-direction: column; justify-content: center; align-items: center; position: absolute; }
+        .active { display: flex; z-index: 10; }
+        .white-glow { background: radial-gradient(circle, #ffffff 0%, #A9A9A9 100%); }
+        
+        button {
+            padding: 12px 30px;
+            background: var(--text-dark);
+            color: white;
+            border: 2px solid var(--gold);
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-transform: uppercase;
+        }
+
+        #gallery-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 2000; flex-direction: column; align-items: center;
+            padding-top: 50px; overflow-y: auto; color: white;
+        }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; width: 85%; margin-top: 30px; }
+        .gallery-grid img { width: 100%; border: 2px solid var(--gold); border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+    <div id="hearts-container"></div>
+    <div id="rope-lights"></div>
+
+    <section class="page active white-glow" id="page1">
+        <h1>Happy Birthday Munni❣</h1>
+        <p>A cinematic journey made for you</p>
+        <button onclick="goToPage(2)">Open Your Gift🎁</button>
+    </section>
+
+    <section class="page" id="page2">
+        <div class="card">
+            <h2 id="q-text">Aj tuhinje lai special day aahe 💌</h2>
+            <button onclick="nextQuestion()">Next</button>
+        </div>
+    </section>
+
+    <section class="page" id="page3">
+        <h2 id="stage-msg">stage tayar aahe🤗</h2>
+        <div id="controls"><button onclick="lightsOn()">thoro lights on kar💡</button></div>
+    </section>
+
+    <section class="page" id="page4">
+        <div class="curtain-wrapper">
+            <div class="curtain" id="curtain-l"></div>
+            <div class="curtain" id="curtain-r"></div>
+        </div>
+        <div class="card">
+            <h2 style="color: var(--gold);">Happy Birthday Munni😚</h2>
+            <p>Pyari Moula tokhe hamesha khush rakhe🤗 tokhe zindagi ji har khushi naseeb thiyan❣ ae Moula kare tuhuinji har dua qabool thiye🤲🏻 hamesha khush raho Muhinji Jana😚 .</p>
+        </div>
+        
+    </section>
+
+
+
+     <audio id="audio" src="music.mp3"></audio>
+    <script>
+        function spawnHeart() {
+            const container = document.getElementById('hearts-container');
+            const heart = document.createElement('div');
+            heart.className = 'heart'; heart.innerHTML = '❤';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+            container.appendChild(heart);
+            setTimeout(() => heart.remove(), 7000);
+        }
+        setInterval(spawnHeart, 300);
+
+        function goToPage(index) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page' + index).classList.add('active');
+            if(index === 4) {
+                setTimeout(() => {
+                    document.getElementById('curtain-l').classList.add('open-left');
+                    document.getElementById('curtain-r').classList.add('open-right');
+                }, 500);
+            }
+        }
+
+        let qStep = 0;
+        function nextQuestion() {
+            const texts = ["Have a look madam ji🤭", "Tayar aahi surprise je lai?🥳"];
+            if(qStep < texts.length) {
+                document.getElementById('q-text').innerText = texts[qStep];
+                qStep++;
+            } else { goToPage(3); }
+        }
+
+        function lightsOn() {
+            document.getElementById('page3').classList.add('white-glow');
+            document.getElementById('rope-lights').classList.add('lights-active');
+            document.getElementById('stage-msg').innerText = "Muhinje khayal sa thoro music bh play kariyu 🎶";
+            document.getElementById('controls').innerHTML = '<button onclick="startMusic()">Play Music</button>';
+        }
+
+        function startMusic() {
+            document.getElementById('audio').play();
+            document.getElementById('stage-msg').innerText = "Baki last thoro🤭...";
+            document.getElementById('controls').innerHTML = '<button onclick="goToPage(4)">See Message</button>';
+        }
+    </script>
+</body>
+</html>
