@@ -25,7 +25,6 @@
             position: fixed;
         }
 
-        /* Hearts & Balloons Container */
         #animation-container {
             position: fixed;
             top: 0; left: 0;
@@ -41,14 +40,14 @@
             bottom: -10vh;
         }
 
-        /* Balloons Style */
+        /* Continuous Balloons Style */
         .balloon {
             position: absolute;
             width: 40px;
             height: 55px;
             border-radius: 50%;
             bottom: -100px;
-            animation: fly 8s ease-in infinite;
+            animation: fly 8s ease-in forwards;
             z-index: 2;
         }
         .balloon::after {
@@ -56,12 +55,12 @@
             position: absolute;
             bottom: -15px; left: 18px;
             width: 2px; height: 20px;
-            background: rgba(0,0,0,0.2);
+            background: rgba(0,0,0,0.1);
         }
 
         @keyframes fly {
             0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-120vh) rotate(20deg); opacity: 0; }
+            100% { transform: translateY(-130vh) rotate(20deg); opacity: 0; }
         }
 
         @keyframes floatUp {
@@ -70,21 +69,20 @@
             100% { transform: translateY(-120vh); opacity: 0; }
         }
 
-        /* Rope Lights */
+        /* FIXED: No Spacing Rope Lights */
         #rope-lights {
             position: fixed;
             top: 0; left: 0;
-            width: 100%; height: 80px;
+            width: 100%; height: 85px;
             z-index: 2500;
             display: none;
             background-image: url("data:image/svg+xml,%3Csvg width='150' height='100' viewBox='0 0 150 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,0 Q18.75,140 37.5,0 Q56.25,140 75,0 Q93.75,140 112.5,0 Q131.25,140 150,0' fill='none' stroke='%23d4af37' stroke-width='4'/%3E%3Ccircle cx='18.75' cy='75' r='7' fill='%23fff'/%3E%3Ccircle cx='56.25' cy='75' r='7' fill='%23fff'/%3E%3Ccircle cx='93.75' cy='75' r='7' fill='%23fff'/%3E%3Ccircle cx='131.25' cy='75' r='7' fill='%23fff'/%3E%3C/svg%3E");
             background-repeat: repeat-x;
-            background-size: 200px 100%;
+            background-size: 150px 100%; /* Match width to SVG width to remove gaps */
         }
 
         .lights-active { display: block !important; }
 
-        /* Page Layout */
         .page {
             display: none;
             height: 100%; width: 100%;
@@ -100,7 +98,6 @@
         .active { display: flex; z-index: 10; }
         .white-glow { background: radial-gradient(circle, #ffffff 0%, #A9A9A9 100%); }
 
-        /* Rotating Card */
         .card {
             background: white;
             padding: 30px 20px;
@@ -146,14 +143,14 @@
             from { transform: rotate(0deg); } to { transform: rotate(360deg); }
         }
 
-        /* Curtains with Auto-Fade */
+        /* Curtain Fade-Out */
         .curtain-wrapper {
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
             display: flex; z-index: 2000;
             pointer-events: none;
-            transition: opacity 1.5s ease 4s; /* Fade out curtains after they open */
+            transition: opacity 1.5s ease 4s;
         }
 
         .show-final-content .curtain-wrapper { opacity: 0; }
@@ -213,7 +210,7 @@
         </div>
         <div class="card" id="final-card">
             <h2 style="color: var(--gold); margin-bottom: 10px;">Happy Birthday Rabel!</h2>
-            <p>You make the world brighter just by being in it.</p>
+            <p>You make the world brighter just by being in it. May your year be as beautiful as you are!</p>
         </div>
     </section>
 
@@ -231,20 +228,22 @@
         }
         setInterval(spawnHeart, 400);
 
-        function flyBalloons() {
+        // Infinite Balloon Engine
+        let balloonInterval;
+        function startInfiniteBalloons() {
             const container = document.getElementById('animation-container');
             const colors = ['#FF69B4', '#FFD700', '#87CEEB', '#DDA0DD', '#FFB6C1'];
-            for(let i=0; i<15; i++) {
-                setTimeout(() => {
-                    const b = document.createElement('div');
-                    b.className = 'balloon';
-                    b.style.left = Math.random() * 90 + 'vw';
-                    b.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                    b.style.animationDuration = (Math.random() * 3 + 5) + 's';
-                    container.appendChild(b);
-                    setTimeout(() => b.remove(), 8000);
-                }, i * 300);
-            }
+            
+            balloonInterval = setInterval(() => {
+                const b = document.createElement('div');
+                b.className = 'balloon';
+                b.style.left = Math.random() * 90 + 'vw';
+                b.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                b.style.animationDuration = (Math.random() * 3 + 6) + 's';
+                container.appendChild(b);
+                // Remove from DOM after it flies away to keep performance smooth
+                setTimeout(() => b.remove(), 9000);
+            }, 600); // New balloon every 0.6 seconds
         }
 
         function goToPage(index) {
@@ -258,7 +257,7 @@
                     document.getElementById('curtain-l').classList.add('open-left');
                     document.getElementById('curtain-r').classList.add('open-right');
                     nextPage.classList.add('show-final-content');
-                    flyBalloons(); // Balloons fly automatically when curtains open
+                    startInfiniteBalloons(); // Start the infinite loop
                 }, 600);
             }
         }
@@ -272,7 +271,7 @@
 
         function startMusic() {
             document.getElementById('audio').play();
-            document.getElementById('stage-msg').innerText = "Ready to Fly Balloons?";
+            document.getElementById('stage-msg').innerText = "Ready for the Finale?";
             document.getElementById('controls').innerHTML = '<button onclick="goToPage(4)">Fly Balloons & See Message</button>';
         }
 
