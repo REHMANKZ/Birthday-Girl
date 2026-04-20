@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Rabel's Birthday Journey</title>
+    <title>Birthday Special</title>
     <style>
         :root {
             --platinum: #DCDCDC;
@@ -186,21 +186,21 @@
     <div id="rope-lights"></div>
 
     <section class="page active white-glow" id="page1">
-        <h1>Happy BirthdayMunni❣</h1>
+        <h1>Happy Birthday My LOve❣</h1>
         <p>A cinematic journey made for you</p>
         <button onclick="goToPage(2)">Open Your Gift🎁</button>
     </section>
 
     <section class="page" id="page2">
         <div class="card">
-            <h2 id="q-text">Aj Tuhinje Lai Special day aahe💌</h2>
+            <h2 id="q-text"Today is your Special day💌</h2>
             <button onclick="nextQuestion()">Next</button>
         </div>
     </section>
 
     <section class="page" id="page3">
-        <h2 id="stage-msg">Stage tayar aahe 🤭</h2>
-        <div id="controls"><button onclick="lightsOn()">Thoro lights wagera haru🤭💡</button></div>
+        <h2 id="stage-msg">Stage is Ready 🤭</h2>
+        <div id="controls"><button onclick="lightsOn()">we Should add some decor and lights🤭💡</button></div>
     </section>
 
     <section class="page" id="page4">
@@ -209,8 +209,8 @@
             <div class="curtain" id="curtain-r"></div>
         </div>
         <div class="card" id="final-card">
-            <h2 style="color: var(--gold); margin-bottom: 10px;">Happy Birthday Munni😚</h2>
-            <p><b>Pyari Moula tokhe hamesha khush rakhe🤗 tokhe zindagi ji har khushi naseeb thiyan❣ ae Moula kare tuhuinji har dua qabool thiye🤲🏻 hamesha khush raho Muhinji Jana😚 </b>.</p>
+            <h2 style="color: var(--gold); margin-bottom: 10px;">Happy Birthday My love😚</h2>
+            <p><b>May Allah keep you always smile 🤗 YOu will get blessed with all your wishes ❣ May allah FulFill all your wishes 🤲🏻 Keep this cute smile always in you face😚 </b>.</p>
         </div>
     </section>
 
@@ -265,19 +265,19 @@
         function lightsOn() {
             document.getElementById('page3').classList.add('white-glow');
             document.getElementById('rope-lights').classList.add('lights-active');
-            document.getElementById('stage-msg').innerText = "Muhinje khayal sa thoro music bh play kariyu 🎶";
+            document.getElementById('stage-msg').innerText = "Music makes it better 🎶";
             document.getElementById('controls').innerHTML = '<button onclick="startMusic()">Play Music</button>';
         }
 
         function startMusic() {
             document.getElementById('audio').play();
-            document.getElementById('stage-msg').innerText = "Baki last thoro🤭...";
+            document.getElementById('stage-msg').innerText = "Almost THere...🤭";
             document.getElementById('controls').innerHTML = '<button onclick="goToPage(4)">See Message</button>';
         }
 
         let qStep = 0;
         function nextQuestion() {
-            const texts = ["Have a look madam ji🤭", "Tayar aahi surprise je lai?🥳"];
+            const texts = ["Have a look madam ji🤭", "Are you ready for your surprise?🥳"];
             if(qStep < texts.length) {
                 document.getElementById('q-text').innerText = texts[qStep];
                 qStep++;
